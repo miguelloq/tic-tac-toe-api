@@ -1,5 +1,6 @@
-package com.example.model
+package com.example.modules.user.model
 
+import com.example.modules.task.model.Task
 import kotlinx.serialization.Serializable
 
 @Serializable

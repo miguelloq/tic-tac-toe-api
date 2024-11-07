@@ -1,11 +1,7 @@
-package com.example.repository
+package com.example.modules.user.repository
 
-import com.example.db.TaskTable
-import com.example.db.UserEntity
-import com.example.db.UserTable
-import com.example.db.suspendTransaction
-import com.example.db.toModel
-import com.example.model.User
+import com.example.core.repository.suspendTransaction
+import com.example.modules.user.model.User
 
 class PostgresUserRepository(): UserRepository {
     override suspend fun create(user: User) {

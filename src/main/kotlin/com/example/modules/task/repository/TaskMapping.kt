@@ -1,7 +1,9 @@
-package com.example.db
+package com.example.modules.task.repository
 
-import com.example.model.Task
-import com.example.model.Task.Priority
+import com.example.modules.user.repository.UserEntity
+import com.example.modules.user.repository.UserTable
+import com.example.modules.task.model.Task
+import com.example.modules.task.model.Task.Priority
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -21,7 +23,7 @@ class TaskEntity(id: EntityID<Int>) : IntEntity(id) {
     var name by TaskTable.name
     var description by TaskTable.description
     var priority by TaskTable.priority
-    var user by UserEntity referencedOn TaskTable.user
+    var user by UserEntity.Companion referencedOn TaskTable.user
 }
 
 fun daoToModel(dao: TaskEntity) = Task(

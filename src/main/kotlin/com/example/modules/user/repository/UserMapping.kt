@@ -1,7 +1,9 @@
-package com.example.db
+package com.example.modules.user.repository
 
-import com.example.model.Task
-import com.example.model.User
+import com.example.modules.user.model.User
+import com.example.modules.task.repository.TaskEntity
+import com.example.modules.task.repository.TaskTable
+import com.example.modules.task.repository.daoToModel
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -19,7 +21,7 @@ open class UserEntity(id: EntityID<Int>): IntEntity(id), AbstractUserEntity{
 
     var name by UserTable.name
     var password by UserTable.password
-    val tasks by TaskEntity referrersOn TaskTable.user
+    val tasks by TaskEntity.Companion referrersOn TaskTable.user
 }
 
 fun UserEntity.toModel(withoutTasks: Boolean = false) = User(

@@ -1,4 +1,4 @@
-package com.example.model
+package com.example.modules.task.model
 
 import kotlinx.serialization.Serializable
 

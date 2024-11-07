@@ -1,7 +1,6 @@
-package com.example.repository
+package com.example.modules.user.repository
 
-import com.example.model.Task
-import com.example.model.User
+import com.example.modules.user.model.User
 
 interface UserRepository {
     suspend fun create(user: User)

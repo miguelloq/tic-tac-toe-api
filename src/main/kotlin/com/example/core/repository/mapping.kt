@@ -1,4 +1,4 @@
-package com.example.db
+package com.example.core.repository
 
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Transaction

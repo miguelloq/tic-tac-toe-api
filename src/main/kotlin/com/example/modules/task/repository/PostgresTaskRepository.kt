@@ -1,12 +1,13 @@
 package com.example.model
 
-import com.example.db.TaskEntity
-import com.example.db.TaskTable
-import com.example.db.UserEntity
-import com.example.db.daoToModel
-import com.example.db.suspendTransaction
-import com.example.model.Task.Priority
-import com.example.repository.TaskRepository
+import com.example.modules.task.repository.TaskEntity
+import com.example.modules.task.repository.TaskTable
+import com.example.modules.user.repository.UserEntity
+import com.example.modules.task.repository.daoToModel
+import com.example.core.repository.suspendTransaction
+import com.example.modules.task.model.Task
+import com.example.modules.task.model.Task.Priority
+import com.example.modules.task.repository.TaskRepository
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 
