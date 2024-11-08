@@ -1,8 +1,8 @@
 package com.example.modules.task.route
 
-import com.example.model.PostgresTaskRepository
 import com.example.modules.task.model.Task
 import com.example.modules.task.model.Task.Priority
+import com.example.modules.task.repository.TaskRepository
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.JsonConvertException
 import io.ktor.server.request.receive
@@ -13,9 +13,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 
-fun Routing.taskRoute() = route("/tasks") {
-    val taskRepo = PostgresTaskRepository()
-    //by inject<TaskRepository>()
+fun Routing.taskRoute(taskRepo: TaskRepository) = route("/tasks") {
 
     get {
         val tasks = taskRepo.allTasks()
