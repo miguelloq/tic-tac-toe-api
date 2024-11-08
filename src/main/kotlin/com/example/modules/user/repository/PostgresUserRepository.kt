@@ -16,10 +16,4 @@ class PostgresUserRepository(): UserRepository {
             .all()
             .map{ it.toModel(withoutTasks = true) }
     }
-
-    override suspend fun allWithTasks(): List<User> = suspendTransaction {
-        UserEntity
-            .all()
-            .map{ it.toModel() }
-    }
 }

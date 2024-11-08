@@ -13,7 +13,5 @@ fun Routing.usersRoute() = route("/users"){
 
     get{ call.respond(userRepo.all()) }
 
-    get("/tasks"){ call.respond(userRepo.allWithTasks()) }
-
 }
 

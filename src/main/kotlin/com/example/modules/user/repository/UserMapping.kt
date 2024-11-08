@@ -14,18 +14,15 @@ object UserTable: IntIdTable("users"){
     val password = varchar("password",20)
 }
 
-sealed interface AbstractUserEntity
 
-open class UserEntity(id: EntityID<Int>): IntEntity(id), AbstractUserEntity{
+open class UserEntity(id: EntityID<Int>): IntEntity(id){
     companion object : IntEntityClass<UserEntity>(UserTable)
 
     var name by UserTable.name
     var password by UserTable.password
-    val tasks by TaskEntity.Companion referrersOn TaskTable.user
 }
 
 fun UserEntity.toModel(withoutTasks: Boolean = false) = User(
     name,
     password,
-    if(withoutTasks) emptyList() else tasks.map { daoToModel(it) }
 )
