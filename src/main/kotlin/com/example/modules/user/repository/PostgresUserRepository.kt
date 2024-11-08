@@ -1,19 +1,21 @@
 package com.example.modules.user.repository
 
 import com.example.core.repository.suspendTransaction
-import com.example.modules.user.model.User
+import com.example.modules.user.domain.model.User
 
 class PostgresUserRepository(): UserRepository {
     override suspend fun create(user: User) {
         UserEntity.new {
-            name = user.name
-            password = user.password
+            name = user.name.s
+            email = user.email.s
+            password = user.password.s
         }
     }
 
     override suspend fun all(): List<User> = suspendTransaction {
         UserEntity
             .all()
-            .map{ it.toModel(withoutTasks = true) }
+            .map{ it.toModel() }
     }
+
 }
