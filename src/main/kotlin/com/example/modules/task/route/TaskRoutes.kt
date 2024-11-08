@@ -8,12 +8,15 @@ import io.ktor.serialization.JsonConvertException
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
+import io.ktor.server.routing.application
 import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
+import org.koin.ktor.ext.inject
 
-fun Routing.taskRoute(taskRepo: TaskRepository) = route("/tasks") {
+fun Routing.taskRoute() = route("/tasks") {
+    val taskRepo by application.inject<TaskRepository>()
 
     get {
         val tasks = taskRepo.allTasks()
