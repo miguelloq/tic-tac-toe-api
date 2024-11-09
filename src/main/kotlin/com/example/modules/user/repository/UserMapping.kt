@@ -22,9 +22,3 @@ class UserEntity(id: EntityID<Int>): IntEntity(id){
     var password by UserTable.password
     var email by UserTable.email
 }
-
-fun UserEntity.toModel() = User(
-    email = Email(email),
-    name = Name(name),
-    password = Password(password)
-)

@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 interface UserRepository {
     suspend fun create(user: User)
-    suspend fun all(): List<User>
+    suspend fun all(): List<Pair<Long,User>>
 }
