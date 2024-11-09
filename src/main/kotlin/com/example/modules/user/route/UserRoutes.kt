@@ -1,7 +1,6 @@
 package com.example.modules.user.route
 
 import com.example.modules.user.domain.usecase.RegisterUserUsecase
-import com.example.modules.user.repository.RegisterUserDto
 import com.example.modules.user.repository.UserRepository
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.request.receive
@@ -30,4 +29,11 @@ fun Routing.usersRoute() = route("/users"){
         }
     }
 }
+
+@Serializable
+data class RegisterUserDto(
+    val name: String,
+    val email: String,
+    val password: String
+)
 

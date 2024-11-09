@@ -6,9 +6,9 @@ import com.example.modules.user.domain.model.User
 class PostgresUserRepository(): UserRepository {
     override suspend fun create(user: User): Unit = suspendTransaction{
         UserEntity.new {
-            name = user.name.s
-            email = user.email.s
-            password = user.password.s
+            name = user.name.value
+            email = user.email.value
+            password = user.password.value
         }
     }
 
