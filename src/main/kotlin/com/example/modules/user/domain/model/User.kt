@@ -26,7 +26,7 @@ fun User.Companion.fromStrings(
 
 private fun String.validateEmail() = Email(this)
     .also{
-        if(length>20) throw UserError.InvalidField("Email", "The maximum length is 20.")
+        if(length>40) throw UserError.InvalidField("Email", "The maximum length is 20.")
         val funIsEmail = {s: String -> "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex().matches(s)}
         if(!funIsEmail(this)) throw UserError.InvalidField("Email", "Not a valid email contaning syntax error.")
     }

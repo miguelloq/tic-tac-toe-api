@@ -4,7 +4,7 @@ import com.example.core.repository.suspendTransaction
 import com.example.modules.user.domain.model.User
 
 class PostgresUserRepository(): UserRepository {
-    override suspend fun create(user: User) {
+    override suspend fun create(user: User): Unit = suspendTransaction{
         UserEntity.new {
             name = user.name.s
             email = user.email.s

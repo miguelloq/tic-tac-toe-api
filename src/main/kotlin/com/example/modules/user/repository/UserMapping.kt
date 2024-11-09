@@ -13,7 +13,7 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 object UserTable: IntIdTable("users"){
     val name = varchar("name",20)
     val password = varchar("password",20)
-    val email = varchar("email",20)
+    val email = varchar("email",40)
 }
 
 
