@@ -14,5 +14,3 @@ fun Application.module() {
     configureDependecyInjection()
     configureRouting()
 }
-
-

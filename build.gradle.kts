@@ -5,6 +5,7 @@ val logback_version: String by project
 val postgres_version: String by project
 val ktor_version: String by project
 val koin_version: String by project
+val flyway_version: String by project
 
 plugins {
     kotlin("jvm") version "2.0.21"
@@ -44,6 +45,8 @@ dependencies {
     implementation("io.ktor:ktor-server-config-yaml:$ktor_version")
     testImplementation("io.ktor:ktor-server-test-host-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation("org.flywaydb:flyway-core:$flyway_version")
+    implementation("org.flywaydb:flyway-database-postgresql:$flyway_version")
 
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
 }
