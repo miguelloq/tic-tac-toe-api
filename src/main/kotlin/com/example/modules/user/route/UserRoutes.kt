@@ -1,5 +1,6 @@
 package com.example.modules.user.route
 
+import com.example.modules.user.domain.usecase.RegisterUserDto
 import com.example.modules.user.domain.usecase.RegisterUserUsecase
 import com.example.modules.user.repository.UserRepository
 import io.ktor.http.HttpStatusCode
@@ -10,7 +11,6 @@ import io.ktor.server.routing.application
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
-import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
 fun Routing.usersRoute() = route("/users"){
@@ -30,10 +30,5 @@ fun Routing.usersRoute() = route("/users"){
     }
 }
 
-@Serializable
-data class RegisterUserDto(
-    val name: String,
-    val email: String,
-    val password: String
-)
+
 
