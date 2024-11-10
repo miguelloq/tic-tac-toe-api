@@ -14,6 +14,10 @@ data class User(
             value.maximumLength("Name",20)
             value.cannotByBlank("Name")
         }
+
+        companion object{
+            fun generic() = Name("Generic")
+        }
     }
 
     @JvmInline @Serializable value class Email(val value: String){

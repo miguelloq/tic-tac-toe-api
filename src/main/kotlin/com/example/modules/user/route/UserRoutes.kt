@@ -1,9 +1,13 @@
 package com.example.modules.user.route
 
+import com.example.modules.user.domain.model.User
 import com.example.modules.user.domain.usecase.GetAllUserUsecase
+import com.example.modules.user.domain.usecase.LoginRequestDto
+import com.example.modules.user.domain.usecase.LoginUserUsecase
 import com.example.modules.user.domain.usecase.RegisterUserDto
 import com.example.modules.user.domain.usecase.RegisterUserUsecase
 import io.ktor.http.HttpStatusCode
+import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
@@ -11,17 +15,28 @@ import io.ktor.server.routing.application
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
+import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
 fun Route.usersRoute() = route("/users"){
     val getAllUserUsecase by application.inject<GetAllUserUsecase>()
     val registerUserUsecase by application.inject<RegisterUserUsecase>()
+    val loginUserUsecase by application.inject<LoginUserUsecase>()
 
-    get{
-        try {
+    authenticate("core-auth"){
+        get(){
             val users = getAllUserUsecase()
-            call.respond(users)
-        }catch(e: Exception){
+            val response = users.map{ it.toGetAllUser() }
+            call.respond(response)
+        }
+    }
+
+    get("login"){
+        try {
+            val dto = call.receive<LoginRequestDto>()
+            val token = loginUserUsecase(dto)
+            call.respond(hashMapOf("token" to token))
+        }catch (e: Exception){
             call.respond(HttpStatusCode.BadRequest)
         }
     }
@@ -37,5 +52,5 @@ fun Route.usersRoute() = route("/users"){
     }
 }
 
-
-
+@Serializable data class GetUserResponseDto(val id:Long, val name: String)
+fun Pair<Long, User>.toGetAllUser() = GetUserResponseDto(first, second.name.value)

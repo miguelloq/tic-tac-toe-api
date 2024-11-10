@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.core.plugins.configureAuthentication
 import com.example.core.plugins.configureDatabase
 import com.example.core.plugins.configureDependecyInjection
 import com.example.core.plugins.configureRouting
@@ -12,5 +13,6 @@ fun main(args: Array<String>) {
 fun Application.module() {
     configureDatabase()
     configureDependecyInjection()
+    configureAuthentication()
     configureRouting()
 }

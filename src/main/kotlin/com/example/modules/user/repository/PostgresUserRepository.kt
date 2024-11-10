@@ -24,6 +24,21 @@ class PostgresUserRepository(): UserRepository {
                 catch (e: UserError){ acc }
             }
     }
+
+    override suspend fun findByEmail(email: Email): Pair<Long,User>? = suspendTransaction {
+        UserEntity
+            .find{ UserTable.email eq email.value}
+            .limit(1)
+            .map { Pair(it.id.value.toLong(), it.toModel()) }
+            .firstOrNull()
+
+    }
+
+    override suspend fun findById(id: Long): User?  = suspendTransaction {
+        UserEntity
+            .findById(id.toInt())
+            ?.toModel()
+    }
 }
 
 private fun UserEntity.toModel() = User(
