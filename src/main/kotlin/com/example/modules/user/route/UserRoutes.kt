@@ -1,5 +1,7 @@
 package com.example.modules.user.route
 
+import com.example.core.plugins.getTokenConfig
+import com.example.core.plugins.getUserId
 import com.example.modules.user.domain.model.User
 import com.example.modules.user.domain.usecase.GetAllUserUsecase
 import com.example.modules.user.domain.usecase.LoginRequestDto
@@ -33,10 +35,11 @@ fun Route.usersRoute() = route("/users"){
 
     get("login"){
         try {
+            val tokenConfig = application.getTokenConfig()
             val dto = call.receive<LoginRequestDto>()
-            val token = loginUserUsecase(dto)
+            val token = loginUserUsecase(tokenConfig,dto)
             call.respond(hashMapOf("token" to token))
-        }catch (e: Exception){
+        }catch (_: Exception){
             call.respond(HttpStatusCode.BadRequest)
         }
     }
@@ -46,8 +49,15 @@ fun Route.usersRoute() = route("/users"){
             val dto = call.receive<RegisterUserDto>()
             registerUserUsecase(dto)
             call.respond(HttpStatusCode.NoContent)
-        }catch(e: Exception){
+        }catch(_: Exception){
             call.respond(HttpStatusCode.BadRequest)
+        }
+    }
+
+    authenticate("core-auth"){
+        get("id"){
+            val id = getUserId() ?: call.respond(HttpStatusCode.Unauthorized)
+            call.respond(id)
         }
     }
 }

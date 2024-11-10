@@ -1,7 +1,6 @@
 package com.example.core.plugins
 
 import com.example.core.coreKoinModule
-import com.example.core.service.AuthenticationService
 import com.example.modules.task.taskKoinModule
 import com.example.modules.user.userKoinModule
 import io.ktor.server.application.Application
