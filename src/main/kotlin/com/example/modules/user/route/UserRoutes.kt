@@ -20,10 +20,11 @@ import io.ktor.server.routing.route
 import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
-fun Route.usersRoute() = route("/users"){
-    val getAllUserUsecase by application.inject<GetAllUserUsecase>()
-    val registerUserUsecase by application.inject<RegisterUserUsecase>()
-    val loginUserUsecase by application.inject<LoginUserUsecase>()
+fun Route.usersRoute(
+    getAllUserUsecase: GetAllUserUsecase = application.inject<GetAllUserUsecase>().value,
+    registerUserUsecase: RegisterUserUsecase = application.inject<RegisterUserUsecase>().value,
+    loginUserUsecase: LoginUserUsecase  = application.inject<LoginUserUsecase>().value
+) = route("/users"){
 
     authenticate("core-auth"){
         get(){
