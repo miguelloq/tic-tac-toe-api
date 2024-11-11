@@ -6,6 +6,8 @@ val postgres_version: String by project
 val ktor_version: String by project
 val koin_version: String by project
 val flyway_version: String by project
+val junit_version: String by project
+val mockk_version: String by project
 
 plugins {
     kotlin("jvm") version "2.0.21"
@@ -32,6 +34,8 @@ dependencies {
     implementation("io.ktor:ktor-server-websockets-jvm:$ktor_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
+    testImplementation("io.insert-koin:koin-test:$koin_version")
+    testImplementation("io.insert-koin:koin-test-junit5:$koin_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("org.postgresql:postgresql:$postgres_version")
@@ -47,6 +51,12 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     implementation("org.flywaydb:flyway-core:$flyway_version")
     implementation("org.flywaydb:flyway-database-postgresql:$flyway_version")
-
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
+    testImplementation("org.junit.jupiter:junit-jupiter:$junit_version")
+    testImplementation("io.mockk:mockk:$mockk_version")
+}
+
+
+tasks.test {
+    useJUnitPlatform()
 }
