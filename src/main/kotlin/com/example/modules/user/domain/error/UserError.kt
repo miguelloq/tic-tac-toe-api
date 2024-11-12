@@ -6,7 +6,9 @@ sealed class UserError(override val message: String): Exception(message) {
 
     data object NotFindedInDatabase : UserError("User not finded in the database.")
 
+    data object EmailAlreadyRegistered: UserError("Email is already in use.")
+
     data object WrongPassword: UserError("Wrong password!")
 
-    data object Unknown: UserError("Unknown Error")
+    data object Unknown: UserError("Unknown Error.")
 }

@@ -1,5 +1,6 @@
 package com.example.modules.user.domain.usecase
 
+import com.example.modules.user.domain.error.UserError
 import com.example.modules.user.domain.model.User
 import com.example.modules.user.domain.model.User.Email
 import com.example.modules.user.domain.model.User.Name
@@ -10,6 +11,8 @@ import kotlinx.serialization.Serializable
 class RegisterUserUsecase(val userRepo: UserRepository) {
     suspend operator fun invoke(dto: RegisterUserDto){
         val model = dto.toModel()
+        val isEmailAlreadyInUse = userRepo.findByEmail(model.email) != null
+        if(isEmailAlreadyInUse) throw UserError.EmailAlreadyRegistered
         userRepo.create(model)
     }
 }
