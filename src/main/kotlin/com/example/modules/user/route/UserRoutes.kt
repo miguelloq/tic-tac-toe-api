@@ -2,6 +2,7 @@ package com.example.modules.user.route
 
 import com.example.core.plugins.getTokenConfig
 import com.example.core.plugins.getUserId
+import com.example.modules.user.domain.error.UserError
 import com.example.modules.user.domain.model.User
 import com.example.modules.user.domain.usecase.GetAllUserUsecase
 import com.example.modules.user.domain.usecase.LoginRequestDto
@@ -13,6 +14,7 @@ import io.ktor.server.auth.authenticate
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Route
+import io.ktor.server.routing.RoutingContext
 import io.ktor.server.routing.application
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
@@ -26,39 +28,47 @@ fun Route.usersRoute(
     loginUserUsecase: LoginUserUsecase  = application.inject<LoginUserUsecase>().value
 ) = route("/users"){
 
+    suspend fun RoutingContext.catchingUserError(block: suspend RoutingContext.()->Unit) = try{
+        block()
+    }catch(userErr: UserError){
+        call.respond(HttpStatusCode.BadRequest,userErr.message)
+    }catch (_: Exception){
+        call.respond(HttpStatusCode.InternalServerError)
+    }
+
     authenticate("core-auth"){
         get(){
-            val users = getAllUserUsecase()
-            val response = users.map{ it.toGetAllUser() }
-            call.respond(response)
+            catchingUserError {
+                val users = getAllUserUsecase()
+                val response = users.map{ it.toGetAllUser() }
+                call.respond(response)
+            }
         }
     }
 
     get("login"){
-        try {
+        catchingUserError {
             val tokenConfig = application.getTokenConfig()
             val dto = call.receive<LoginRequestDto>()
-            val token = loginUserUsecase(tokenConfig,dto)
+            val token = loginUserUsecase(tokenConfig, dto)
             call.respond(hashMapOf("token" to token))
-        }catch (_: Exception){
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
 
     post{
-        try {
+        catchingUserError {
             val dto = call.receive<RegisterUserDto>()
             registerUserUsecase(dto)
             call.respond(HttpStatusCode.NoContent)
-        }catch(_: Exception){
-            call.respond(HttpStatusCode.BadRequest)
         }
     }
 
     authenticate("core-auth"){
         get("id"){
-            val id = getUserId() ?: call.respond(HttpStatusCode.Unauthorized)
-            call.respond(id)
+            catchingUserError {
+                val id = getUserId() ?: call.respond(HttpStatusCode.Unauthorized)
+                call.respond(id)
+            }
         }
     }
 }
