@@ -11,7 +11,7 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    //configureDatabase()
+    configureDatabase()
     configureDependecyInjection()
     configureAuthentication()
     configureRouting()

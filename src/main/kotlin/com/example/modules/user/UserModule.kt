@@ -12,8 +12,8 @@ import org.koin.core.KoinApplication
 import org.koin.dsl.module
 
 fun KoinApplication.userKoinModule() = module{
-    //single<UserRepository>{ PostgresUserRepository() }
-    single<UserRepository>{ FakeUserRepository() }
+    single<UserRepository>{ PostgresUserRepository() }
+    //single<UserRepository>{ FakeUserRepository() }
     single<CreateTokenService>{ CreateTokenServiceImpl() }
     single{ RegisterUserUsecase(get()) }
     single{ GetAllUserUsecase(get()) }
